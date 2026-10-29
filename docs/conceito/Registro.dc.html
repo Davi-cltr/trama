@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Dar um ponto</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Young+Serif&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1C2238}a:hover{color:#3552C4}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #3552C4;outline-offset:2px}
+.gl path,.gl circle{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gl .k{stroke-width:2.8}
+.gl .z{stroke-width:3.2}
+.gl .f{fill:currentColor;stroke:none}
+.done-thread{fill:none;stroke:#E8678C;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:300;animation:weave 1s cubic-bezier(.2,.7,.2,1) both}
+.done-stitch{animation:pop .4s ease-out .8s both}
+@keyframes weave{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+@keyframes pop{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){.done-thread,.done-stitch{animation:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E9ECF0; color: #1C2238; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; padding: 18px 20px 24px; display: flex; flex-direction: column; gap: 18px; overflow: hidden">
+
+<a href="Main.dc.html" aria-label="Voltar para a trama" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; border: 1px solid #C3C9D6; display: grid; place-items: center; color: #1C2238">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5L8 12L15 19" style="fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"></path></svg>
+</a>
+
+<sc-if value="{{editing}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div>
+<h1 style="margin: 0; font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.15">Que ponto você quer dar?</h1>
+<p style="margin: 8px 0 0; display: flex; align-items: center; gap: 8px; font-size: 15px; color: #4A5170"><span style="width: 22px; height: 3px; border-radius: 2px; background: #B3264E"></span>Na trama do Theo, pela linha da Ana.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<button type="button" aria-pressed="{{p.crise}}" onClick="{{pick.crise}}" style="min-height: 104px; padding: 14px; border-radius: 16px; border: 2px solid {{bc.crise}}; background: {{bg.crise}}; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; color: #1C2238">
+<svg class="gl" width="28" height="28" viewBox="-10 -10 20 20" aria-hidden="true" style="color: #B3264E"><path class="k" d="M-5 -5L5 5M5 -5L-5 5"></path></svg>
+<span style="font-size: 16px; font-weight: 700">Crise</span>
+<span style="font-size: 13px; color: #4A5170">Algo difícil aconteceu</span>
+</button>
+<button type="button" aria-pressed="{{p.conq}}" onClick="{{pick.conq}}" style="min-height: 104px; padding: 14px; border-radius: 16px; border: 2px solid {{bc.conq}}; background: {{bg.conq}}; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; color: #1C2238">
+<svg class="gl" width="28" height="28" viewBox="-10 -10 20 20" aria-hidden="true" style="color: #B3264E"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></svg>
+<span style="font-size: 16px; font-weight: 700">Conquista</span>
+<span style="font-size: 13px; color: #4A5170">Ele fez algo novo</span>
+</button>
+<button type="button" aria-pressed="{{p.func}}" onClick="{{pick.func}}" style="min-height: 104px; padding: 14px; border-radius: 16px; border: 2px solid {{bc.func}}; background: {{bg.func}}; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; color: #1C2238">
+<svg class="gl" width="28" height="28" viewBox="-10 -10 20 20" aria-hidden="true" style="color: #B3264E"><circle r="4.5"></circle></svg>
+<span style="font-size: 16px; font-weight: 700">Funcionou</span>
+<span style="font-size: 13px; color: #4A5170">Uma estratégia que ajudou</span>
+</button>
+<button type="button" aria-pressed="{{p.sono}}" onClick="{{pick.sono}}" style="min-height: 104px; padding: 14px; border-radius: 16px; border: 2px solid {{bc.sono}}; background: {{bg.sono}}; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; color: #1C2238">
+<svg class="gl" width="28" height="28" viewBox="-10 -10 20 20" aria-hidden="true" style="color: #B3264E"><path class="z" d="M-7 0H7"></path></svg>
+<span style="font-size: 16px; font-weight: 700">Sono</span>
+<span style="font-size: 13px; color: #4A5170">Como foi a noite</span>
+</button>
+<button type="button" aria-pressed="{{p.comida}}" onClick="{{pick.comida}}" style="min-height: 104px; padding: 14px; border-radius: 16px; border: 2px solid {{bc.comida}}; background: {{bg.comida}}; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; color: #1C2238">
+<svg class="gl" width="28" height="28" viewBox="-10 -10 20 20" aria-hidden="true" style="color: #B3264E"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></svg>
+<span style="font-size: 16px; font-weight: 700">Comida</span>
+<span style="font-size: 13px; color: #4A5170">Refeição ou recusa</span>
+</button>
+<button type="button" aria-pressed="{{p.nota}}" onClick="{{pick.nota}}" style="min-height: 104px; padding: 14px; border-radius: 16px; border: 2px solid {{bc.nota}}; background: {{bg.nota}}; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; color: #1C2238">
+<svg class="gl" width="28" height="28" viewBox="-10 -10 20 20" aria-hidden="true" style="color: #B3264E"><path d="M0 -5V5"></path></svg>
+<span style="font-size: 16px; font-weight: 700">Nota</span>
+<span style="font-size: 13px; color: #4A5170">Qualquer outra coisa</span>
+</button>
+</div>
+
+<sc-if value="{{isSono}}" hint-placeholder-val="{{ false }}">
+<div role="group" aria-label="Como foi a noite?" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<button type="button" aria-pressed="{{bomPressed}}" onClick="{{setBom}}" style="height: 52px; border-radius: 14px; border: 2px solid {{bomBorder}}; background: {{bomBg}}; font-family: inherit; font-size: 15px; font-weight: 700; color: #1C2238; cursor: pointer">Dormiu bem</button>
+<button type="button" aria-pressed="{{ruimPressed}}" onClick="{{setRuim}}" style="height: 52px; border-radius: 14px; border: 2px solid {{ruimBorder}}; background: {{ruimBg}}; font-family: inherit; font-size: 15px; font-weight: 700; color: #1C2238; cursor: pointer">Noite ruim</button>
+</div>
+</sc-if>
+<sc-if value="{{notSono}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="detalhe" style="font-size: 14px; font-weight: 700">Conte em poucas palavras (opcional)</label>
+<input id="detalhe" type="text" placeholder="{{placeholder}}" style="height: 50px; box-sizing: border-box; padding: 0 14px; border-radius: 14px; border: 1px solid #B9C0CE; background: #FFFFFF; font-family: inherit; font-size: 16px; color: #1C2238">
+</div>
+</sc-if>
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="font-size: 15px">Agora, 18h40</span>
+<button type="button" style="height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid #C3C9D6; background: transparent; font-family: inherit; font-size: 14px; color: #1C2238; cursor: pointer">Mudar horário</button>
+</div>
+
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4A5170">
+<span style="display: inline-flex; gap: 3px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #3552C4"></span><span style="width: 8px; height: 8px; border-radius: 50%; background: #B07A0C"></span><span style="width: 8px; height: 8px; border-radius: 50%; background: #2C8A64"></span></span>
+Júlia, Rafa e Cida veem este ponto na hora.
+</p>
+
+<button type="button" onClick="{{submit}}" style="height: 56px; border-radius: 16px; border: none; background: #B3264E; color: #FFFFFF; font-family: inherit; font-size: 17px; font-weight: 700; cursor: pointer">Dar o ponto</button>
+</div>
+</sc-if>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 16px; padding-top: 48px">
+<svg width="350" height="80" viewBox="0 0 350 80" aria-hidden="true">
+<line x1="0" y1="40" x2="350" y2="40" style="stroke: #E8678C; stroke-width: 1; opacity: 0.3"></line>
+<path class="done-thread" d="M0 40C60 40 110 40 175 40"></path>
+<g class="gl done-stitch" transform="translate(175 40) scale(2.2)" style="color: #B3264E">
+<sc-if value="{{glyph.crise}}" hint-placeholder-val="{{ false }}"><path class="k" d="M-5 -5L5 5M5 -5L-5 5"></path></sc-if>
+<sc-if value="{{glyph.conq}}" hint-placeholder-val="{{ false }}"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></sc-if>
+<sc-if value="{{glyph.func}}" hint-placeholder-val="{{ true }}"><circle r="4.5"></circle></sc-if>
+<sc-if value="{{glyph.sonoBom}}" hint-placeholder-val="{{ false }}"><path class="z" d="M-7 0H7"></path></sc-if>
+<sc-if value="{{glyph.sonoRuim}}" hint-placeholder-val="{{ false }}"><path class="z" d="M-7 0H-2M2 0H7"></path></sc-if>
+<sc-if value="{{glyph.comida}}" hint-placeholder-val="{{ false }}"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></sc-if>
+<sc-if value="{{glyph.nota}}" hint-placeholder-val="{{ false }}"><path d="M0 -5V5"></path></sc-if>
+</g>
+</svg>
+<h1 style="margin: 0; font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.15">Ponto dado.</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #4A5170">Já aparece na trama do Theo para Júlia, Rafa e Cida.</p>
+<a href="Main.dc.html" style="display: flex; align-items: center; justify-content: center; height: 56px; border-radius: 16px; background: #1C2238; color: #FFFFFF; text-decoration: none; font-size: 17px; font-weight: 700">Ver na trama</a>
+<button type="button" onClick="{{again}}" style="height: 48px; border-radius: 14px; border: 1px solid #C3C9D6; background: transparent; font-family: inherit; font-size: 15px; color: #1C2238; cursor: pointer">Dar outro ponto</button>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 'func', sono: 'bom', done: false };
+  }
+  renderVals() {
+    const s = this.state || {};
+    const sel = s.sel || 'func';
+    const sono = s.sono || 'bom';
+    const done = !!s.done;
+    const keys = ['crise', 'conq', 'func', 'sono', 'comida', 'nota'];
+    const p = {}, bc = {}, bg = {}, pick = {};
+    keys.forEach((k) => {
+      const on = sel === k;
+      p[k] = on ? 'true' : 'false';
+      bc[k] = on ? '#B3264E' : '#D0D6E0';
+      bg[k] = on ? '#FBEEF2' : '#FFFFFF';
+      pick[k] = () => this.setState({ sel: k });
+    });
+    const placeholders = {
+      crise: 'Ex.: chorou forte na troca de sala',
+      conq: 'Ex.: pediu ajuda com palavras',
+      func: 'Ex.: contar até 10 antes do banho',
+      comida: 'Ex.: aceitou banana no lanche',
+      nota: 'Ex.: dentista na quinta'
+    };
+    const bom = sono === 'bom';
+    return {
+      editing: !done,
+      done: done,
+      p: p, bc: bc, bg: bg, pick: pick,
+      isSono: sel === 'sono',
+      notSono: sel !== 'sono',
+      placeholder: placeholders[sel] || '',
+      bomPressed: bom ? 'true' : 'false',
+      ruimPressed: bom ? 'false' : 'true',
+      bomBorder: bom ? '#B3264E' : '#D0D6E0',
+      ruimBorder: bom ? '#D0D6E0' : '#B3264E',
+      bomBg: bom ? '#FBEEF2' : '#FFFFFF',
+      ruimBg: bom ? '#FFFFFF' : '#FBEEF2',
+      setBom: () => this.setState({ sono: 'bom' }),
+      setRuim: () => this.setState({ sono: 'ruim' }),
+      glyph: {
+        crise: sel === 'crise',
+        conq: sel === 'conq',
+        func: sel === 'func',
+        sonoBom: sel === 'sono' && bom,
+        sonoRuim: sel === 'sono' && !bom,
+        comida: sel === 'comida',
+        nota: sel === 'nota'
+      },
+      submit: () => this.setState({ done: true }),
+      again: () => this.setState({ done: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

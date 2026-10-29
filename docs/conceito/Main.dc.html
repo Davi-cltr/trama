@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>A semana do Theo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Young+Serif&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1C2238}a:hover{color:#3552C4}
+a:focus-visible,button:focus-visible{outline:3px solid #3552C4;outline-offset:2px}
+.ana{color:#E8678C}.julia{color:#6E8BFF}.rafa{color:#F2B33D}.cida{color:#4CC392}
+.base{stroke:currentColor;stroke-width:1;opacity:.28}
+.thr{stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:300;stroke-dashoffset:0;animation:weave 1.1s cubic-bezier(.2,.7,.2,1) both}
+.w0{animation-delay:.10s}.w1{animation-delay:.18s}.w2{animation-delay:.26s}.w3{animation-delay:.34s}.w4{animation-delay:.42s}.w5{animation-delay:.50s}.w6{animation-delay:.58s}
+.st{animation:pop .5s ease-out both}
+.s0{animation-delay:.75s}.s1{animation-delay:.85s}.s2{animation-delay:.95s}.s3{animation-delay:1.05s}.s4{animation-delay:1.15s}.s5{animation-delay:1.25s}.s6{animation-delay:1.35s}
+.st path,.st circle,.gl path,.gl circle{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.st .k,.gl .k{stroke-width:2.8}
+.st .z,.gl .z{stroke-width:3.2}
+.st .f,.gl .f{fill:currentColor;stroke:none}
+.day{fill:#A9B0CC;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:11px}
+.ax{fill:#8D96B8;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:10px;text-anchor:middle}
+.dimmable,.overlay{transition:opacity .45s ease}
+.link{fill:none;stroke:#FFFFFF;stroke-width:1.4;stroke-dasharray:3 3;stroke-linecap:round}
+.halo{fill:none;stroke:#FFFFFF;stroke-width:1;opacity:.75}
+@keyframes weave{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+@keyframes pop{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){.thr,.st{animation:none}.dimmable,.overlay{transition:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 1060px; box-sizing: border-box; background: #E9ECF0; color: #1C2238; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; padding: 18px 20px 24px; display: flex; flex-direction: column; gap: 16px; overflow: hidden">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 9C9 4 17 14 23 9" style="fill: none; stroke: #B3264E; stroke-width: 2.4; stroke-linecap: round"></path><path d="M3 17C9 12 17 22 23 17" style="fill: none; stroke: #3552C4; stroke-width: 2.4; stroke-linecap: round"></path><path d="M9 3V23" style="fill: none; stroke: #1C2238; stroke-width: 1.4; stroke-linecap: round"></path><path d="M17 3V23" style="fill: none; stroke: #1C2238; stroke-width: 1.4; stroke-linecap: round"></path></svg>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 20px">Trama</span>
+</div>
+<button type="button" aria-label="Convidar alguém para a trama" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid #C3C9D6; background: transparent; display: grid; place-items: center; cursor: pointer; color: #1C2238">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="4" style="fill: none; stroke: currentColor; stroke-width: 1.8"></circle><path d="M3 20c0-3.5 3.1-6 7-6s7 2.5 7 6" style="fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round"></path><path d="M19 7v6M16 10h6" style="fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round"></path></svg>
+</button>
+</div>
+
+<div>
+<h1 style="margin: 0; font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-size: 32px; line-height: 1.1; letter-spacing: -0.01em">A semana do Theo</h1>
+<p style="margin: 8px 0 0; font-size: 15px; line-height: 1.4; color: #4A5170">20 a 26 de outubro. 30 pontos dados por 4 pessoas.</p>
+</div>
+
+<nav aria-label="Período" style="display: flex; gap: 4px; padding: 4px; border: 1px solid #C3C9D6; border-radius: 999px; align-self: flex-start">
+<span aria-current="page" style="display: inline-flex; align-items: center; height: 36px; padding: 0 18px; border-radius: 999px; background: #1C2238; color: #FFFFFF; font-size: 15px; font-weight: 700">Semana</span>
+<a href="Mes.dc.html" style="display: inline-flex; align-items: center; height: 36px; padding: 0 18px; border-radius: 999px; color: #1C2238; font-size: 15px; text-decoration: none">Mês</a>
+</nav>
+
+<section aria-label="A trama da semana" style="background: #1C2238; border-radius: 22px; padding: 16px 12px 14px; display: flex; flex-direction: column; gap: 12px">
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; padding: 0 6px; font-size: 13px; color: #DDE1EE">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 18px; height: 3px; border-radius: 2px; background: #E8678C"></span>Ana, mãe</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 18px; height: 3px; border-radius: 2px; background: #6E8BFF"></span>Júlia, professora</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 18px; height: 3px; border-radius: 2px; background: #F2B33D"></span>Rafa, fono</div>
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 18px; height: 3px; border-radius: 2px; background: #4CC392"></span>Cida, avó</div>
+</div>
+
+<svg width="326" height="400" viewBox="0 0 350 430" role="img" aria-label="Trama da semana: uma faixa por dia, uma linha por pessoa, das 6h às 22h. Trinta pontos. Na terça, quinta e sexta, uma noite ruim marcada pela Ana é seguida de crise na escola marcada pela Júlia." style="display: block">
+
+<text class="day" x="10" y="49">Seg</text>
+<text class="day" x="10" y="105">Ter</text>
+<text class="day" x="10" y="161">Qua</text>
+<text class="day" x="10" y="217">Qui</text>
+<text class="day" x="10" y="273">Sex</text>
+<text class="day" x="10" y="329">Sáb</text>
+<text class="day" x="10" y="385">Dom</text>
+<text class="ax" x="52" y="424">6h</text>
+<text class="ax" x="160" y="424">12h</text>
+<text class="ax" x="268" y="424">18h</text>
+<text class="ax" x="340" y="424">22h</text>
+
+<g>
+<line class="base ana" x1="52" y1="28" x2="340" y2="28"></line><line class="base julia" x1="52" y1="39" x2="340" y2="39"></line><line class="base rafa" x1="52" y1="50" x2="340" y2="50"></line><line class="base cida" x1="52" y1="61" x2="340" y2="61"></line>
+<line class="base ana" x1="52" y1="84" x2="340" y2="84"></line><line class="base julia" x1="52" y1="95" x2="340" y2="95"></line><line class="base rafa" x1="52" y1="106" x2="340" y2="106"></line><line class="base cida" x1="52" y1="117" x2="340" y2="117"></line>
+<line class="base ana" x1="52" y1="140" x2="340" y2="140"></line><line class="base julia" x1="52" y1="151" x2="340" y2="151"></line><line class="base rafa" x1="52" y1="162" x2="340" y2="162"></line><line class="base cida" x1="52" y1="173" x2="340" y2="173"></line>
+<line class="base ana" x1="52" y1="196" x2="340" y2="196"></line><line class="base julia" x1="52" y1="207" x2="340" y2="207"></line><line class="base rafa" x1="52" y1="218" x2="340" y2="218"></line><line class="base cida" x1="52" y1="229" x2="340" y2="229"></line>
+<line class="base ana" x1="52" y1="252" x2="340" y2="252"></line><line class="base julia" x1="52" y1="263" x2="340" y2="263"></line><line class="base rafa" x1="52" y1="274" x2="340" y2="274"></line><line class="base cida" x1="52" y1="285" x2="340" y2="285"></line>
+<line class="base ana" x1="52" y1="308" x2="340" y2="308"></line><line class="base julia" x1="52" y1="319" x2="340" y2="319"></line><line class="base rafa" x1="52" y1="330" x2="340" y2="330"></line><line class="base cida" x1="52" y1="341" x2="340" y2="341"></line>
+<line class="base ana" x1="52" y1="364" x2="340" y2="364"></line><line class="base julia" x1="52" y1="375" x2="340" y2="375"></line><line class="base rafa" x1="52" y1="386" x2="340" y2="386"></line><line class="base cida" x1="52" y1="397" x2="340" y2="397"></line>
+</g>
+
+<g class="dimmable" style="opacity: {{dim}}">
+<line class="thr ana w0" x1="52" y1="28" x2="83.5" y2="28"></line><line class="thr ana w0" x1="259" y1="28" x2="340" y2="28"></line><line class="thr julia w0" x1="88" y1="39" x2="169" y2="39"></line><line class="thr rafa w0" x1="196" y1="50" x2="214" y2="50"></line><line class="thr cida w0" x1="178" y1="61" x2="259" y2="61"></line>
+<line class="thr ana w1" x1="52" y1="84" x2="83.5" y2="84"></line><line class="thr ana w1" x1="259" y1="84" x2="340" y2="84"></line><line class="thr julia w1" x1="88" y1="95" x2="169" y2="95"></line><line class="thr cida w1" x1="178" y1="117" x2="259" y2="117"></line>
+<line class="thr ana w2" x1="52" y1="140" x2="83.5" y2="140"></line><line class="thr ana w2" x1="259" y1="140" x2="340" y2="140"></line><line class="thr julia w2" x1="88" y1="151" x2="169" y2="151"></line><line class="thr rafa w2" x1="196" y1="162" x2="214" y2="162"></line><line class="thr cida w2" x1="178" y1="173" x2="259" y2="173"></line>
+<line class="thr ana w3" x1="52" y1="196" x2="83.5" y2="196"></line><line class="thr ana w3" x1="259" y1="196" x2="340" y2="196"></line><line class="thr julia w3" x1="88" y1="207" x2="169" y2="207"></line><line class="thr cida w3" x1="178" y1="229" x2="259" y2="229"></line>
+<line class="thr ana w4" x1="52" y1="252" x2="83.5" y2="252"></line><line class="thr ana w4" x1="259" y1="252" x2="340" y2="252"></line><line class="thr julia w4" x1="88" y1="263" x2="169" y2="263"></line><line class="thr rafa w4" x1="214" y1="274" x2="232" y2="274"></line><line class="thr cida w4" x1="178" y1="285" x2="259" y2="285"></line>
+<line class="thr ana w5" x1="52" y1="308" x2="106" y2="308"></line><line class="thr ana w5" x1="250" y1="308" x2="340" y2="308"></line><line class="thr cida w5" x1="106" y1="341" x2="250" y2="341"></line>
+<line class="thr ana w6" x1="52" y1="364" x2="340" y2="364"></line><line class="thr cida w6" x1="124" y1="397" x2="178" y2="397"></line>
+
+<g class="st s0 ana" transform="translate(61 28)"><path class="z" d="M-7 0H7"></path></g>
+<g class="st s0 julia" transform="translate(124 39)"><circle r="4.5"></circle></g>
+<g class="st s0 rafa" transform="translate(205 50)"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></g>
+<g class="st s0 cida" transform="translate(223 61)"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></g>
+<g class="st s0 ana" transform="translate(304 28)"><path d="M0 -5V5"></path></g>
+
+<g class="st s1 cida" transform="translate(214 117)"><circle r="4.5"></circle></g>
+<g class="st s1 ana" transform="translate(304 84)"><path d="M0 -5V5"></path></g>
+
+<g class="st s2 ana" transform="translate(61 140)"><path class="z" d="M-7 0H7"></path></g>
+<g class="st s2 julia" transform="translate(106 151)"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></g>
+<g class="st s2 rafa" transform="translate(205 162)"><circle r="4.5"></circle></g>
+<g class="st s2 ana" transform="translate(295 140)"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></g>
+
+<g class="st s3 julia" transform="translate(142 207)"><circle r="4.5"></circle></g>
+<g class="st s3 cida" transform="translate(232 229)"><path d="M0 -5V5"></path></g>
+<g class="st s3 ana" transform="translate(322 196)"><path d="M0 -5V5"></path></g>
+
+<g class="st s4 rafa" transform="translate(223 274)"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></g>
+<g class="st s4 cida" transform="translate(250 285)"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></g>
+
+<g class="st s5 ana" transform="translate(61 308)"><path class="z" d="M-7 0H7"></path></g>
+<g class="st s5 cida" transform="translate(142 341)"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></g>
+<g class="st s5 cida" transform="translate(178 341)"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></g>
+<g class="st s5 ana" transform="translate(286 308)"><circle r="4.5"></circle></g>
+
+<g class="st s6 ana" transform="translate(70 364)"><path class="z" d="M-7 0H7"></path></g>
+<g class="st s6 cida" transform="translate(142 397)"><path d="M0 -5V5"></path></g>
+<g class="st s6 ana" transform="translate(250 364)"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></g>
+<g class="st s6 ana" transform="translate(286 364)"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></g>
+</g>
+
+<g>
+<g class="st s1 ana" transform="translate(61 84)"><path class="z" d="M-7 0H-2M2 0H7"></path></g>
+<g class="st s1 julia" transform="translate(124 95)"><path class="k" d="M-5 -5L5 5M5 -5L-5 5"></path></g>
+<g class="st s3 ana" transform="translate(61 196)"><path class="z" d="M-7 0H-2M2 0H7"></path></g>
+<g class="st s3 julia" transform="translate(115 207)"><path class="k" d="M-5 -5L5 5M5 -5L-5 5"></path></g>
+<g class="st s4 ana" transform="translate(65 252)"><path class="z" d="M-7 0H-2M2 0H7"></path></g>
+<g class="st s4 julia" transform="translate(142 263)"><path class="k" d="M-5 -5L5 5M5 -5L-5 5"></path></g>
+</g>
+
+<g class="overlay" style="opacity: {{overlay}}">
+<path class="link" d="M61 84C80 64 108 70 124 95"></path>
+<path class="link" d="M61 196C78 176 100 182 115 207"></path>
+<path class="link" d="M65 252C88 230 124 236 142 263"></path>
+<circle class="halo" cx="61" cy="84" r="10"></circle><circle class="halo" cx="124" cy="95" r="10"></circle>
+<circle class="halo" cx="61" cy="196" r="10"></circle><circle class="halo" cx="115" cy="207" r="10"></circle>
+<circle class="halo" cx="65" cy="252" r="10"></circle><circle class="halo" cx="142" cy="263" r="10"></circle>
+</g>
+</svg>
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 0 6px; font-size: 12px; color: #C9CEE3">
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path class="k" d="M-5 -5L5 5M5 -5L-5 5"></path></svg>Crise</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path class="f" d="M0 -6L6 0L0 6L-6 0Z"></path></svg>Conquista</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><circle r="4.5"></circle></svg>Funcionou</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path class="z" d="M-7 0H7"></path></svg>Dormiu bem</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path class="z" d="M-7 0H-2M2 0H7"></path></svg>Noite ruim</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><circle class="f" cx="-3" r="2.3"></circle><circle class="f" cx="3" r="2.3"></circle></svg>Comida</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><svg class="gl" width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path d="M0 -5V5"></path></svg>Nota</span>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #D5DAE3; border-radius: 20px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-size: 20px; line-height: 1.3">Nas 3 vezes em que dormiu mal, o Theo teve crise na escola no mesmo dia.</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4A5170">Ana marcou o sono por volta das 6h30. Júlia marcou as crises entre 9h30 e 11h. Vale levar isso para a consulta.</p>
+<button type="button" aria-pressed="{{pressed}}" onClick="{{toggle}}" style="align-self: flex-start; height: 44px; padding: 0 18px; border-radius: 12px; border: none; background: #1C2238; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer">{{label}}</button>
+<p style="margin: 0; font-size: 12px; line-height: 1.4; color: #5A6080">Leitura automática dos registros. Não substitui avaliação profissional.</p>
+</section>
+
+<a href="Registro.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px; flex-shrink: 0; border-radius: 16px; background: #B3264E; color: #FFFFFF; text-decoration: none; font-size: 17px; font-weight: 700">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L17 7" style="fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-linecap: round"></path><circle cx="18.5" cy="5.5" r="2" style="fill: none; stroke: #FFFFFF; stroke-width: 1.6"></circle><path d="M18.5 7.5C21 12 13 13 9 18" style="fill: none; stroke: #FFFFFF; stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 2 2.5"></path></svg>
+Dar um ponto
+</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { show: false };
+  }
+  renderVals() {
+    const show = !!(this.state && this.state.show);
+    return {
+      dim: show ? 0.22 : 1,
+      overlay: show ? 1 : 0,
+      label: show ? 'Esconder o padrão' : 'Mostrar o padrão',
+      pressed: show ? 'true' : 'false',
+      toggle: () => this.setState({ show: !show })
+    };
+  }
+}
+</script>
+</body>
+</html>
