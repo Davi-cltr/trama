@@ -130,3 +130,24 @@ export function usePonto(id: string | undefined) {
     },
   });
 }
+
+/** true quando a dona aceitou o envio para a IA e não revogou. */
+export function useConsentimento(cadernoId: string, habilitado = true) {
+  return useQuery({
+    queryKey: ['consentimento', cadernoId],
+    enabled: habilitado,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('consentimentos_ia').select('aceito_em, revogado_em').eq('caderno_id', cadernoId).maybeSingle();
+      falhou(error);
+      return !!data?.aceito_em && !data.revogado_em;
+    },
+  });
+}
+
+export async function buscarPontosEntre(cadernoId: string, de: string, ate: string) {
+  const { data, error } = await supabase
+    .from('pontos').select('*').eq('caderno_id', cadernoId).gte('ocorreu_em', de).lt('ocorreu_em', ate).order('ocorreu_em');
+  falhou(error);
+  return (data ?? []).map(paraPonto);
+}

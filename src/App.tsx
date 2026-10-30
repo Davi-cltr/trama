@@ -11,6 +11,7 @@ import { DarPontoPage } from './features/ponto/DarPontoPage';
 import { SincronizarRascunhos } from './features/ponto/SincronizarRascunhos';
 import { SemanaPage } from './features/semana/SemanaPage';
 import { MesPage } from './features/mes/MesPage';
+import { ResumoPage } from './features/resumo/ResumoPage';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: true } },
@@ -40,7 +41,7 @@ export function Rotas() {
         <Route path="/c/:cadernoId/ponto" element={<DarPontoPage />} />
         <Route path="/c/:cadernoId/ponto/:pontoId" element={<DarPontoPage />} />
         <Route path="/c/:cadernoId/pessoas" element={<PessoasPage />} />
-        <Route path="/c/:cadernoId/resumo" element={<EmConstrucao titulo="Resumo" />} />
+        <Route path="/c/:cadernoId/resumo" element={<ResumoPage />} />
         <Route path="/convite" element={<AceitarConvitePage />} />
         <Route path="/conta" element={<EmConstrucao titulo="Sua conta" />} />
       </Route>

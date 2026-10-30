@@ -178,3 +178,28 @@ export function useMudarPapel() {
     onSuccess: (_r, v) => qc.invalidateQueries({ queryKey: chaves.membros(v.cadernoId) }),
   });
 }
+
+export function useAceitarConsentimento() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { cadernoId: string }>({
+    mutationFn: async v => {
+      const { error } = await supabase
+        .from('consentimentos_ia')
+        .upsert({ caderno_id: v.cadernoId, aceito_em: new Date().toISOString(), revogado_em: null });
+      falhou(error);
+    },
+    onSuccess: (_r, v) => qc.invalidateQueries({ queryKey: ['consentimento', v.cadernoId] }),
+  });
+}
+
+export function useRevogarConsentimento() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { cadernoId: string }>({
+    mutationFn: async v => {
+      const { error } = await supabase
+        .from('consentimentos_ia').update({ revogado_em: new Date().toISOString() }).eq('caderno_id', v.cadernoId);
+      falhou(error);
+    },
+    onSuccess: (_r, v) => qc.invalidateQueries({ queryKey: ['consentimento', v.cadernoId] }),
+  });
+}
