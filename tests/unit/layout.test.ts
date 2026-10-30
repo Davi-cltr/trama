@@ -113,3 +113,17 @@ it('mês de outubro tem 31 faixas', () => {
   expect(layoutMes.faixas[4].rotulo).toBe('5');
   expect(layoutMes.altura).toBe(31 * 26);
 });
+
+it('guarda a hora local real de cada ponto', () => {
+  const layout = layoutTrama({
+    periodo: semana, membros: [m('ana', 0, '2026-01-01')],
+    pontos: [{ ...ponto('ana', '2026-10-28', '12:00', 'nota'), ocorreuEm: '2026-10-29T02:30:00Z' }], dim: DIM_SEMANA,
+  });
+  expect(layout.faixas[2].pontos[0].hora).toBeCloseTo(23.5);
+});
+
+it('expõe largura e o deslocamento de cada linha na faixa', () => {
+  const layout = layoutTrama({ periodo: semanaTheo, membros, pontos: pontosTheo, dim: DIM_SEMANA });
+  expect(layout.largura).toBe(350);
+  expect(layout.linhas.map(l => l.dy)).toEqual([11, 22, 33, 44]);
+});

@@ -21,11 +21,11 @@ export const DIM_MES: Dimensoes = {
   largura: 904, xInicio: 44, xFim: 904, topo: 0, alturaFaixa: 26, margemLinha: 5, espacoLinhaMax: 6, afastamentoMin: 8,
 };
 
-export interface LinhaInfo { membroId: string; rotulo: string; corTear: string; corClara: string; ativa: boolean }
+export interface LinhaInfo { membroId: string; rotulo: string; corTear: string; corClara: string; ativa: boolean; /** Distância do topo da faixa até a linha. */ dy: number }
 export interface Trecho { membroId: string; x1: number; x2: number; y: number; cor: string }
-export interface PontoPosicionado { ponto: Ponto; x: number; y: number; cor: string; fora: 'antes' | 'depois' | null }
+export interface PontoPosicionado { ponto: Ponto; x: number; y: number; cor: string; fora: 'antes' | 'depois' | null; /** Hora local real (decimal). */ hora: number }
 export interface Faixa { dia: string; rotulo: string; y: number; trechos: Trecho[]; pontos: PontoPosicionado[] }
-export interface LayoutTrama { linhas: LinhaInfo[]; faixas: Faixa[]; altura: number; x: (hora: number) => number }
+export interface LayoutTrama { linhas: LinhaInfo[]; faixas: Faixa[]; largura: number; altura: number; x: (hora: number) => number }
 
 export const HORA_INICIO = 6;
 export const HORA_FIM = 22;
@@ -47,23 +47,23 @@ export function layoutTrama(input: { periodo: Periodo; membros: Membro[]; pontos
     ...membros.filter(m => m.ativo).sort(porEntrada),
     ...membros.filter(m => !m.ativo && comPontos.has(m.id)).sort(porEntrada),
   ];
-  const linhas: LinhaInfo[] = ordenados.map(m => ({
+  const n = ordenados.length;
+  const espaco = n <= 1 ? 0 : Math.min(dim.espacoLinhaMax, (dim.alturaFaixa - 2 * dim.margemLinha) / (n - 1));
+  const linhas: LinhaInfo[] = ordenados.map((m, i) => ({
     membroId: m.id,
     rotulo: m.rotulo,
     corTear: corDoMembro(m, 'tear'),
     corClara: corDoMembro(m, 'claro'),
     ativa: m.ativo,
+    dy: dim.margemLinha + i * espaco,
   }));
   const indice = new Map(linhas.map((l, i) => [l.membroId, i]));
-
-  const n = linhas.length;
-  const espaco = n <= 1 ? 0 : Math.min(dim.espacoLinhaMax, (dim.alturaFaixa - 2 * dim.margemLinha) / (n - 1));
   const escala = (dim.xFim - dim.xInicio) / (HORA_FIM - HORA_INICIO);
   const x = (hora: number) => dim.xInicio + (clamp(hora, HORA_INICIO, HORA_FIM) - HORA_INICIO) * escala;
 
   const faixas: Faixa[] = dias.map((dia, f) => {
     const y = dim.topo + f * dim.alturaFaixa;
-    const yLinha = (i: number) => y + dim.margemLinha + i * espaco;
+    const yLinha = (i: number) => y + linhas[i].dy;
     const doDia = pontos.filter(e => e.dia === dia && indice.has(e.p.membroId));
 
     const trechos: Trecho[] = [];
@@ -91,6 +91,7 @@ export function layoutTrama(input: { periodo: Periodo; membros: Membro[]; pontos
           y: yLinha(i),
           cor: linha.corTear,
           fora: e.hora < HORA_INICIO ? 'antes' : e.hora > HORA_FIM ? 'depois' : null,
+          hora: e.hora,
         });
       });
     });
@@ -98,7 +99,7 @@ export function layoutTrama(input: { periodo: Periodo; membros: Membro[]; pontos
     return { dia, rotulo: rotuloDoDia(dia, periodo.tipo), y, trechos, pontos: posicionados };
   });
 
-  return { linhas, faixas, altura: dim.topo + dias.length * dim.alturaFaixa, x };
+  return { linhas, faixas, largura: dim.largura, altura: dim.topo + dias.length * dim.alturaFaixa, x };
 }
 
 /** Afasta pontos amontoados na mesma linha, sem passar do fim da trama. */
