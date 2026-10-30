@@ -9,6 +9,7 @@ import { PessoasPage } from './features/pessoas/PessoasPage';
 import { AceitarConvitePage } from './features/pessoas/AceitarConvitePage';
 import { DarPontoPage } from './features/ponto/DarPontoPage';
 import { SincronizarRascunhos } from './features/ponto/SincronizarRascunhos';
+import { SemanaPage } from './features/semana/SemanaPage';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: true } },
@@ -33,7 +34,7 @@ export function Rotas() {
       <Route element={<AuthGate />}>
         <Route path="/" element={<CadernosPage />} />
         <Route path="/novo" element={<NovoCadernoPage />} />
-        <Route path="/c/:cadernoId/semana" element={<EmConstrucao titulo="Semana" />} />
+        <Route path="/c/:cadernoId/semana" element={<SemanaPage />} />
         <Route path="/c/:cadernoId/mes" element={<EmConstrucao titulo="Mês" />} />
         <Route path="/c/:cadernoId/ponto" element={<DarPontoPage />} />
         <Route path="/c/:cadernoId/ponto/:pontoId" element={<DarPontoPage />} />
