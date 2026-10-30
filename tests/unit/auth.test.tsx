@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { StrictMode } from 'react';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { axe } from 'vitest-axe';
@@ -29,6 +30,7 @@ function Onde() {
 
 function montar(rota: string) {
   return render(
+    <StrictMode>
     <QueryClientProvider client={new QueryClient()}>
       <MemoryRouter initialEntries={[rota]}>
         <Routes>
@@ -43,7 +45,8 @@ function montar(rota: string) {
           </Route>
         </Routes>
       </MemoryRouter>
-    </QueryClientProvider>,
+    </QueryClientProvider>
+    </StrictMode>,
   );
 }
 
@@ -121,4 +124,11 @@ it('nome válido salva e segue para a volta', async () => {
 it('telas de entrada sem violações de acessibilidade', async () => {
   const { container } = montar('/entrar');
   expect(await axe(container)).toHaveNoViolations();
+});
+
+it('o fragmento do link mágico nunca vai para a volta', () => {
+  sessao.usuarioId = 'u1';
+  montar('/convite#access_token=segredo&type=magiclink');
+  expect(screen.getByTestId('onde')).toHaveTextContent('/nome?volta=%2Fconvite');
+  expect(screen.getByTestId('onde').textContent).not.toContain('segredo');
 });

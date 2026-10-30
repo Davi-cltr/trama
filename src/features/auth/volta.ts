@@ -20,15 +20,22 @@ export function prepararVolta(volta: string): string {
   return volta.slice(0, i);
 }
 
+/** Só lê (é chamada durante o render, que pode rodar duas vezes). */
 export function voltaGuardada(caminho: string): string | null {
   try {
     const v = localStorage.getItem(CHAVE);
-    if (v && v.slice(0, v.indexOf('#')) === caminho) {
-      localStorage.removeItem(CHAVE);
-      return v;
-    }
+    if (v && v.slice(0, v.indexOf('#')) === caminho) return v;
   } catch {
     // ignora
   }
   return null;
+}
+
+/** Esquece a volta guardada depois que a rota com o fragmento já abriu. */
+export function esquecerVolta(caminhoComFragmento: string): void {
+  try {
+    if (localStorage.getItem(CHAVE) === caminhoComFragmento) localStorage.removeItem(CHAVE);
+  } catch {
+    // ignora
+  }
 }

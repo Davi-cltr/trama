@@ -44,7 +44,7 @@ export function MesPage() {
   return (
     <main className="pagina">
       <div className={css.topo}>
-        <Link to="/" aria-label="Seus cadernos" style={{ textDecoration: 'none' }}><Marca /></Link>
+        <Link to="/" aria-label="Trama: seus cadernos" style={{ textDecoration: 'none' }}><Marca /></Link>
       </div>
       <div>
         <h1 style={{ fontSize: 32 }}>O mês {doApelido(c)}</h1>

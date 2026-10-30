@@ -71,7 +71,7 @@ export function SemanaPage() {
   return (
     <main className="pagina">
       <div className={css.topo}>
-        <Link to="/" aria-label="Seus cadernos" style={{ textDecoration: 'none' }}><Marca /></Link>
+        <Link to="/" aria-label="Trama: seus cadernos" style={{ textDecoration: 'none' }}><Marca /></Link>
         <Link to={`/c/${c.id}/pessoas`} className={css.icone} aria-label="Pessoas da trama">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="10" cy="8" r="4" fill="none" stroke="currentColor" strokeWidth="1.8" />
