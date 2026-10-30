@@ -20,7 +20,7 @@ it('rascunho enviado sai da fila; falha fica', async () => {
   const enviar = vi.fn(async (p: NovoPonto & { id: string }) => {
     if (p.id === 'falha') throw new TypeError('Failed to fetch');
   });
-  expect(await enviarRascunhos(enviar)).toEqual({ enviados: 1, falhas: 1 });
+  expect(await enviarRascunhos(enviar)).toEqual({ enviados: 1, falhas: 1, descartados: [] });
   expect(listarRascunhos().map(r => r.id)).toEqual(['falha']);
 });
 
@@ -35,4 +35,16 @@ it('duas chamadas simultâneas não enviam o mesmo rascunho duas vezes', async (
 it('fila corrompida no aparelho vira fila vazia', () => {
   localStorage.setItem('trama:rascunhos', '{não é json');
   expect(listarRascunhos()).toEqual([]);
+});
+
+it('erro que não é de rede tira o rascunho da fila e conta como descartado', async () => {
+  salvarRascunho(rascunho('removida'));
+  salvarRascunho(rascunho('rede'));
+  const enviar = vi.fn(async (p: NovoPonto & { id: string }) => {
+    if (p.id === 'removida') throw { message: 'new row violates row-level security policy for table "pontos"' };
+    throw new TypeError('Failed to fetch');
+  });
+  const r = await enviarRascunhos(enviar);
+  expect(r).toMatchObject({ enviados: 0, falhas: 1, descartados: [expect.objectContaining({ id: 'removida' })] });
+  expect(listarRascunhos().map(x => x.id)).toEqual(['rede']);
 });

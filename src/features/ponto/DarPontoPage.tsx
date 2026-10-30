@@ -5,7 +5,7 @@ import { TZDate } from '@date-fns/tz';
 import { format } from 'date-fns';
 import { useCaderno, useMembros, usePonto, useSessao } from '../../data/queries';
 import { enviarPonto, useApagarPonto, useDarPonto, useEditarPonto, type NovoPonto } from '../../data/mutations';
-import { enviarRascunhos, salvarRascunho } from '../../data/draftQueue';
+import { enviarRascunhos, listarRascunhos, salvarRascunho } from '../../data/draftQueue';
 import { ehErroDeRede, mensagemDeErro } from '../../data/convite';
 import { corDoMembro } from '../../domain/palette';
 import { contarCaracteres, doApelido, juntarNomes, LIMITES, primeiroNome, validarPonto } from '../../domain/rules';
@@ -85,6 +85,7 @@ function Formulario({ caderno, membros, usuarioId, existente }: { caderno: Cader
   const [fase, setFase] = useState<Fase>('editando');
   const [ultimo, setUltimo] = useState<{ tipo: TipoPonto; sonoRuim: boolean | null } | null>(null);
   const [confirmandoApagar, setConfirmandoApagar] = useState(false);
+  const [rascunhoId, setRascunhoId] = useState<string | null>(null);
   const [agora, setAgora] = useState(() => new Date());
 
   useEffect(() => {
@@ -96,8 +97,13 @@ function Formulario({ caderno, membros, usuarioId, existente }: { caderno: Cader
     const r = await enviarRascunhos(async p => {
       await enviarPonto(p);
     });
-    if (r.falhas === 0) {
-      await qc.invalidateQueries({ queryKey: ['pontos', caderno.id] });
+    if (r.enviados > 0) await qc.invalidateQueries({ queryKey: ['pontos', caderno.id] });
+    // Decide pelo rascunho desta tela, não pelo resto da fila.
+    const recusado = r.descartados.find(d => d.id === rascunhoId);
+    if (recusado) {
+      setErros([mensagemDeErro(recusado.erro)]);
+      setFase('editando');
+    } else if (!listarRascunhos().some(d => d.id === rascunhoId)) {
       setFase(f => (f === 'rascunho' ? 'feito' : f));
     }
   }
@@ -167,6 +173,7 @@ function Formulario({ caderno, membros, usuarioId, existente }: { caderno: Cader
     } catch (e) {
       if (ehErroDeRede(e) || (typeof navigator !== 'undefined' && navigator.onLine === false)) {
         salvarRascunho(novo);
+        setRascunhoId(novo.id);
         setFase('rascunho');
       } else {
         setErros([mensagemDeErro(e)]);

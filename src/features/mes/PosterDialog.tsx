@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 import type { Caderno, Membro } from '../../domain/types';
 import type { LayoutTrama } from '../../tapestry/layout';
-import { TapestrySvg } from '../../tapestry/TapestrySvg';
 import type { Periodo } from '../../tapestry/time';
-import { compartilharOuBaixar, nomeDoArquivo, renderPoster, textosDoPoster } from '../../poster/renderPoster';
+import { compartilharOuBaixar, nomeDoArquivo } from '../../poster/renderPoster';
 import { Button } from '../../ui/Button';
 import { Dialog } from '../../ui/Dialog';
 
@@ -20,9 +18,8 @@ export function PosterDialog({
     setGerando(true);
     setEstado('Gerando o pôster…');
     try {
-      const svg = renderToStaticMarkup(<TapestrySvg layout={layout} variante="mes" ariaLabel="" />);
-      const textos = textosDoPoster(caderno, periodo, membros, total, { esconderNomes, esconderApelido });
-      const png = await renderPoster(svg, textos);
+      const { gerarPoster } = await import('../../poster/gerarPoster');
+      const png = await gerarPoster({ caderno, periodo, layout, membros, total, opcoes: { esconderNomes, esconderApelido } });
       const r = await compartilharOuBaixar(png, nomeDoArquivo(periodo));
       setEstado(r === 'baixado' ? 'Pôster baixado.' : 'Pôster pronto.');
     } catch (e) {

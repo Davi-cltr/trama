@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { axe } from 'vitest-axe';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { theo, membros } from './fixtures/semana-theo';
-import { listarRascunhos } from '../../src/data/draftQueue';
+import { listarRascunhos, salvarRascunho } from '../../src/data/draftQueue';
 
 const estado = vi.hoisted(() => ({ usuarioId: 'perfil-ana', ponto: null as unknown }));
 const fns = vi.hoisted(() => ({
@@ -180,3 +180,29 @@ it('sem violações do axe', async () => {
 });
 
 void theo; void membros;
+
+it('"Tentar agora" mostra "Ponto dado." mesmo se um rascunho antigo continuar sem rede', async () => {
+  salvarRascunho({ id: 'antigo', cadernoId: 'cad-theo', membroId: 'ana', tipo: 'nota', sonoRuim: null, texto: null, ocorreuEm: new Date().toISOString() });
+  fns.dar.mockRejectedValueOnce(new TypeError('Failed to fetch'));
+  fns.enviarPonto.mockImplementation(async (p: unknown) => {
+    if ((p as { id: string }).id === 'antigo') throw new TypeError('Failed to fetch');
+    return p;
+  });
+  montar();
+  await userEvent.click(screen.getByRole('button', { name: /Comida/ }));
+  await userEvent.click(screen.getByRole('button', { name: 'Dar o ponto' }));
+  await userEvent.click(await screen.findByRole('button', { name: 'Tentar agora' }));
+  expect(await screen.findByRole('heading', { name: 'Ponto dado.' })).toBeInTheDocument();
+  expect(listarRascunhos().map(r => r.id)).toEqual(['antigo']);
+});
+
+it('"Tentar agora" com recusa do servidor mostra o motivo', async () => {
+  fns.dar.mockRejectedValueOnce(new TypeError('Failed to fetch'));
+  fns.enviarPonto.mockRejectedValueOnce({ message: 'ocorreu_em_fora_do_limite' });
+  montar();
+  await userEvent.click(screen.getByRole('button', { name: /Comida/ }));
+  await userEvent.click(screen.getByRole('button', { name: 'Dar o ponto' }));
+  await userEvent.click(await screen.findByRole('button', { name: 'Tentar agora' }));
+  expect(await screen.findByText('Só dá para registrar até 7 dias atrás.')).toBeInTheDocument();
+  expect(listarRascunhos()).toEqual([]);
+});
