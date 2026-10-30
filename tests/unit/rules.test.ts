@@ -47,3 +47,11 @@ it('pronome segue o tratamento', () => {
   expect(pronome({ tratamento: 'a' })).toBe('dela');
   expect(pronome({ tratamento: '' })).toBe('dele ou dela');
 });
+
+it('primeiro nome e lista de nomes', async () => {
+  const { primeiroNome, juntarNomes } = await import('../../src/domain/rules');
+  expect(primeiroNome('Júlia, professora')).toBe('Júlia');
+  expect(primeiroNome('Cida')).toBe('Cida');
+  expect(juntarNomes(['Júlia', 'Rafa', 'Cida'])).toBe('Júlia, Rafa e Cida');
+  expect(juntarNomes(['Júlia'])).toBe('Júlia');
+});

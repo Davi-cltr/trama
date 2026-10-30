@@ -1,4 +1,5 @@
 import type { Caderno, Papel, TipoPonto } from './types';
+export { TIPOS } from './types';
 
 export const LIMITES = {
   apelido: 30,
@@ -64,4 +65,15 @@ export function doApelido(c: ComTratamento): string {
 /** "dele", "dela" ou "dele ou dela", conforme o tratamento. */
 export function pronome(c: Pick<Caderno, 'tratamento'>): string {
   return c.tratamento === 'o' ? 'dele' : c.tratamento === 'a' ? 'dela' : 'dele ou dela';
+}
+
+/** "Júlia, professora" → "Júlia". */
+export function primeiroNome(rotulo: string): string {
+  return rotulo.split(',')[0].trim();
+}
+
+/** ["Júlia", "Rafa", "Cida"] → "Júlia, Rafa e Cida". */
+export function juntarNomes(nomes: string[]): string {
+  if (nomes.length <= 1) return nomes.join('');
+  return `${nomes.slice(0, -1).join(', ')} e ${nomes[nomes.length - 1]}`;
 }

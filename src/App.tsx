@@ -7,6 +7,8 @@ import { CadernosPage } from './features/caderno/CadernosPage';
 import { NovoCadernoPage } from './features/caderno/NovoCadernoPage';
 import { PessoasPage } from './features/pessoas/PessoasPage';
 import { AceitarConvitePage } from './features/pessoas/AceitarConvitePage';
+import { DarPontoPage } from './features/ponto/DarPontoPage';
+import { SincronizarRascunhos } from './features/ponto/SincronizarRascunhos';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: true } },
@@ -33,8 +35,8 @@ export function Rotas() {
         <Route path="/novo" element={<NovoCadernoPage />} />
         <Route path="/c/:cadernoId/semana" element={<EmConstrucao titulo="Semana" />} />
         <Route path="/c/:cadernoId/mes" element={<EmConstrucao titulo="Mês" />} />
-        <Route path="/c/:cadernoId/ponto" element={<EmConstrucao titulo="Dar um ponto" />} />
-        <Route path="/c/:cadernoId/ponto/:pontoId" element={<EmConstrucao titulo="Editar ponto" />} />
+        <Route path="/c/:cadernoId/ponto" element={<DarPontoPage />} />
+        <Route path="/c/:cadernoId/ponto/:pontoId" element={<DarPontoPage />} />
         <Route path="/c/:cadernoId/pessoas" element={<PessoasPage />} />
         <Route path="/c/:cadernoId/resumo" element={<EmConstrucao titulo="Resumo" />} />
         <Route path="/convite" element={<AceitarConvitePage />} />
@@ -47,6 +49,7 @@ export function Rotas() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <SincronizarRascunhos />
       <BrowserRouter>
         <Rotas />
       </BrowserRouter>

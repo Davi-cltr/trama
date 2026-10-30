@@ -118,3 +118,15 @@ export function useConvites(cadernoId: string, habilitado = true) {
     },
   });
 }
+
+export function usePonto(id: string | undefined) {
+  return useQuery({
+    queryKey: ['ponto', id],
+    enabled: !!id,
+    queryFn: async () => {
+      const { data, error } = await supabase.from('pontos').select('*').eq('id', id!).maybeSingle();
+      falhou(error);
+      return data ? paraPonto(data) : null;
+    },
+  });
+}
