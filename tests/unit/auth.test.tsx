@@ -132,3 +132,11 @@ it('o fragmento do link mágico nunca vai para a volta', () => {
   expect(screen.getByTestId('onde')).toHaveTextContent('/nome?volta=%2Fconvite');
   expect(screen.getByTestId('onde').textContent).not.toContain('segredo');
 });
+
+it('quem já entrou e abre /entrar segue para a volta', () => {
+  sessao.usuarioId = 'u1';
+  perfil.data = { nomeExibicao: 'Ana' };
+  montar('/entrar?volta=%2Fc%2Fabc%2Fsemana');
+  expect(screen.getByText('Semana')).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'Entre na Trama' })).toBeNull();
+});

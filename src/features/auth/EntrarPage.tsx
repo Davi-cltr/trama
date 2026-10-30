@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
-import { useSearchParams } from 'react-router';
+import { Navigate, useSearchParams } from 'react-router';
 import { supabase } from '../../data/supabase';
+import { useSessao } from '../../data/queries';
 import { mensagemDeErro } from '../../data/convite';
 import { Button } from '../../ui/Button';
 import { Field } from '../../ui/Field';
@@ -13,6 +14,7 @@ export function EntrarPage() {
   const [enviadoPara, setEnviadoPara] = useState<string | null>(null);
   const [erro, setErro] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
+  const { usuarioId, carregando } = useSessao();
 
   async function enviar(e: FormEvent) {
     e.preventDefault();
@@ -32,6 +34,9 @@ export function EntrarPage() {
     if (error) setErro(mensagemDeErro(error));
     else setEnviadoPara(limpo);
   }
+
+  // Quem já tem sessão não precisa de outro link.
+  if (!carregando && usuarioId) return <Navigate to={voltaSegura(params.get('volta'))} replace />;
 
   return (
     <main className="pagina">
