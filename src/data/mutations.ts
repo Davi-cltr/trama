@@ -167,3 +167,14 @@ export function useApagarMinhaConta() {
     },
   });
 }
+
+export function useMudarPapel() {
+  const qc = useQueryClient();
+  return useMutation<void, Error, { id: string; cadernoId: string; papel: Exclude<Papel, 'responsavel'> }>({
+    mutationFn: async v => {
+      const { error } = await supabase.from('membros').update({ papel: v.papel }).eq('id', v.id);
+      falhou(error);
+    },
+    onSuccess: (_r, v) => qc.invalidateQueries({ queryKey: chaves.membros(v.cadernoId) }),
+  });
+}

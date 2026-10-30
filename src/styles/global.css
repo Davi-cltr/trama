@@ -74,3 +74,9 @@ textarea {
     transition-delay: 0s !important;
   }
 }
+
+.erro {
+  color: #b3264e;
+  font-weight: 700;
+  margin: 0;
+}
