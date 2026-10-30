@@ -12,24 +12,18 @@ import { SincronizarRascunhos } from './features/ponto/SincronizarRascunhos';
 import { SemanaPage } from './features/semana/SemanaPage';
 import { MesPage } from './features/mes/MesPage';
 import { ResumoPage } from './features/resumo/ResumoPage';
+import { ContaPage } from './features/conta/ContaPage';
+import { PrivacidadePage } from './features/conta/PrivacidadePage';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: true } },
 });
 
-function EmConstrucao({ titulo }: { titulo: string }) {
-  return (
-    <main className="pagina">
-      <h1>{titulo}</h1>
-    </main>
-  );
-}
-
 export function Rotas() {
   return (
     <Routes>
       <Route path="/entrar" element={<EntrarPage />} />
-      <Route path="/privacidade" element={<EmConstrucao titulo="Privacidade" />} />
+      <Route path="/privacidade" element={<PrivacidadePage />} />
       <Route element={<AuthGate exigirPerfil={false} />}>
         <Route path="/nome" element={<NomePage />} />
       </Route>
@@ -43,7 +37,7 @@ export function Rotas() {
         <Route path="/c/:cadernoId/pessoas" element={<PessoasPage />} />
         <Route path="/c/:cadernoId/resumo" element={<ResumoPage />} />
         <Route path="/convite" element={<AceitarConvitePage />} />
-        <Route path="/conta" element={<EmConstrucao titulo="Sua conta" />} />
+        <Route path="/conta" element={<ContaPage />} />
       </Route>
     </Routes>
   );
