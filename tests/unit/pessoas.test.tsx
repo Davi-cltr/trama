@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { StrictMode } from 'react';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { axe } from 'vitest-axe';
 import type { Caderno, Membro } from '../../src/domain/types';
@@ -60,6 +61,7 @@ function Onde() {
 
 function montar(rota: string) {
   return render(
+    <StrictMode>
     <MemoryRouter initialEntries={[rota]}>
       <Routes>
         <Route path="/" element={<CadernosPage />} />
@@ -68,7 +70,8 @@ function montar(rota: string) {
         <Route path="/convite" element={<AceitarConvitePage />} />
         <Route path="*" element={<Onde />} />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter>
+    </StrictMode>,
   );
 }
 
@@ -179,10 +182,10 @@ it('convite inválido mostra a frase do spec', async () => {
   expect(await screen.findByText('Este convite não vale mais. Peça um novo para quem te convidou.')).toBeInTheDocument();
 });
 
-it('lista de cadernos avisa quando a pessoa perdeu acesso', () => {
+it('lista de cadernos avisa quando a pessoa perdeu acesso', async () => {
   localStorage.setItem('trama:cadernos-conhecidos', JSON.stringify({ 'cad-x': { apelido: 'Bento', tratamento: 'o' }, 'cad-theo': { apelido: 'Theo', tratamento: 'o' } }));
   montar('/');
-  expect(screen.getByText('Você não tem mais acesso ao caderno do Bento.')).toBeInTheDocument();
+  expect(await screen.findByText('Você não tem mais acesso ao caderno do Bento.')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /Theo/ })).toHaveAttribute('href', '/c/cad-theo/semana');
 });
 
