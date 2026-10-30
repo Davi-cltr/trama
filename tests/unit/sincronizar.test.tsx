@@ -27,3 +27,11 @@ it('envia de novo quando a internet volta', async () => {
   await act(async () => { window.dispatchEvent(new Event('online')); });
   await waitFor(() => expect(listarRascunhos()).toEqual([]));
 });
+
+it('avisa quando um ponto guardado não pôde ser dado', async () => {
+  enviarPonto.mockRejectedValueOnce({ message: 'ocorreu_em_fora_do_limite' });
+  salvarRascunho(r);
+  const { findByText } = render(<QueryClientProvider client={new QueryClient()}><SincronizarRascunhos /></QueryClientProvider>);
+  expect(await findByText('Um ponto guardado no aparelho não pôde ser dado: Só dá para registrar até 7 dias atrás.')).toBeInTheDocument();
+  expect(listarRascunhos()).toEqual([]);
+});
