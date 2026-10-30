@@ -1,0 +1,39 @@
+:root {
+  --jenipapo: #1c2238;
+  --nevoa: #e9ecf0;
+  --branco: #ffffff;
+  --texto-2: #4a5170;
+  --texto-3: #5a6080;
+  --borda: #c3c9d6;
+  --borda-cartao: #d5dae3;
+  --foco: #3552c4;
+
+  /* tons para o tear escuro */
+  --linha-0: #e8678c;
+  --linha-1: #6e8bff;
+  --linha-2: #f2b33d;
+  --linha-3: #4cc392;
+  --linha-4: #f08a4b;
+  --linha-5: #b98cf2;
+  --linha-antiga: #8d96b8;
+
+  /* tons para fundos claros */
+  --linha-0-claro: #b3264e;
+  --linha-1-claro: #3552c4;
+  --linha-2-claro: #8a5e07;
+  --linha-3-claro: #226b4c;
+  --linha-4-claro: #9a4413;
+  --linha-5-claro: #7a4fc0;
+  --linha-antiga-claro: #5a6080;
+
+  --tear-dia: #a9b0cc;
+  --tear-hora: #8d96b8;
+  --tear-legenda: #dde1ee;
+
+  --fonte-titulo: 'Young Serif', Georgia, serif;
+  --fonte-texto: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+  --raio: 12px;
+  --raio-grande: 22px;
+  --toque: 44px;
+}

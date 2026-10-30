@@ -1,0 +1,22 @@
+@media print {
+  @page {
+    margin: 18mm 16mm;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .sem-impressao {
+    display: none !important;
+  }
+
+  .resumo-impresso {
+    max-width: none;
+    padding: 0;
+  }
+
+  .resumo-impresso h2 {
+    break-after: avoid;
+  }
+}
