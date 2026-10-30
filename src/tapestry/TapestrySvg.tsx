@@ -70,6 +70,7 @@ export function TapestrySvg(props: {
 
   return (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
       className={css.svg}
       viewBox={`0 0 ${layout.largura} ${altura}`}
       role="group"
