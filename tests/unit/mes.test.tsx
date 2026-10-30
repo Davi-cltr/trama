@@ -44,3 +44,41 @@ it('axe sem violações', async () => {
   const { container } = montar();
   expect(await axe(container)).toHaveNoViolations();
 });
+
+it('no mês os pontos não são alvos de toque soltos; há um caminho por dia', () => {
+  montar();
+  expect(screen.queryByRole('button', { name: /^Crise, Júlia/ })).toBeNull();
+  expect(screen.getByRole('button', { name: 'Ver pontos por dia' })).toBeInTheDocument();
+});
+
+it('tocar na faixa de um dia abre a lista dos pontos daquele dia', async () => {
+  const { container } = montar();
+  await userEvent.click(container.querySelector('[data-dia="2026-10-20"]')!);
+  const dialogo = screen.getByRole('dialog', { name: 'terça, 20 de outubro' });
+  const itens = within(within(dialogo).getByRole('list')).getAllByRole('button');
+  expect(itens.map(b => b.textContent)).toEqual([
+    'Sono, noite ruim · Ana, mãe · 6h30',
+    'Crise · Júlia, professora · 10h',
+    'Funcionou · Cida, avó · 15h',
+    'Nota · Ana, mãe · 20h',
+  ]);
+});
+
+it('setas trocam de dia sem sair do mês', async () => {
+  const { container } = montar();
+  await userEvent.click(container.querySelector('[data-dia="2026-10-01"]')!);
+  const dialogo = screen.getByRole('dialog', { name: 'quinta, 1 de outubro' });
+  expect(within(dialogo).getByRole('button', { name: 'Dia anterior' })).toBeDisabled();
+  expect(within(dialogo).getByText('Nenhum ponto neste dia.')).toBeInTheDocument();
+  await userEvent.click(within(dialogo).getByRole('button', { name: 'Próximo dia' }));
+  expect(screen.getByRole('dialog', { name: 'sexta, 2 de outubro' })).toBeInTheDocument();
+});
+
+it('"Ver pontos por dia" abre no primeiro dia com pontos e leva ao detalhe', async () => {
+  montar();
+  await userEvent.click(screen.getByRole('button', { name: 'Ver pontos por dia' }));
+  const dialogo = screen.getByRole('dialog', { name: 'segunda, 19 de outubro' });
+  await userEvent.click(within(dialogo).getByRole('button', { name: /^Conquista · Rafa, fono/ }));
+  const detalhe = screen.getByRole('dialog', { name: 'Conquista' });
+  expect(detalhe).toHaveTextContent('Pediu água falando.');
+});

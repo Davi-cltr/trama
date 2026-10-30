@@ -5,7 +5,7 @@ import { doApelido } from '../../domain/rules';
 import type { Ponto } from '../../domain/types';
 import { layoutTrama, DIM_MES } from '../../tapestry/layout';
 import { TapestrySvg } from '../../tapestry/TapestrySvg';
-import { nomeDoMes } from '../../tapestry/time';
+import { diaLocal, diasDoPeriodo, nomeDoMes } from '../../tapestry/time';
 import { Button } from '../../ui/Button';
 import { Carregando } from '../auth/AuthGate';
 import { Marca } from '../auth/Marca';
@@ -17,6 +17,7 @@ import { descreverTrama } from '../semana/SemanaPage';
 import { useDadosDoCaderno, usePeriodo } from '../semana/useTrama';
 import css from '../semana/semana.module.css';
 import { PosterDialog } from './PosterDialog';
+import { DiaDialog } from './DiaDialog';
 
 export function MesPage() {
   const { cadernoId = '' } = useParams();
@@ -26,6 +27,7 @@ export function MesPage() {
   const pontos = usePontos(cadernoId, periodo);
   const [poster, setPoster] = useState(false);
   const [selecionado, setSelecionado] = useState<Ponto | null>(null);
+  const [diaAberto, setDiaAberto] = useState<string | null>(null);
 
   const layout = useMemo(
     () => (membros.data && pontos.data ? layoutTrama({ periodo, membros: membros.data, pontos: pontos.data, dim: DIM_MES }) : null),
@@ -39,6 +41,9 @@ export function MesPage() {
   const pessoas = new Set(lista.map(p => p.membroId)).size;
   const membrosNaTrama = layout.linhas.map(l => membros.data!.find(m => m.id === l.membroId)!).filter(Boolean);
   const membroDoSelecionado = selecionado ? membros.data.find(m => m.id === selecionado.membroId) : undefined;
+  const dias = diasDoPeriodo(periodo);
+  const pontosDoDia = diaAberto ? lista.filter(p => diaLocal(p.ocorreuEm, c.fuso) === diaAberto) : [];
+  const primeiroDiaComPontos = lista.length > 0 ? diaLocal(lista[0].ocorreuEm, c.fuso) : dias[0];
   const podeEditar = !!selecionado && (c.donaId === usuarioId || membroDoSelecionado?.perfilId === usuarioId);
 
   return (
@@ -60,9 +65,11 @@ export function MesPage() {
 
       <section className={css.tear} aria-label="A trama do mês">
         <LegendaLinhas linhas={layout.linhas} />
-        <TapestrySvg layout={layout} variante="mes" ariaLabel={descreverTrama(periodo, lista.length)} onSelecionar={setSelecionado} />
+        <TapestrySvg layout={layout} variante="mes" ariaLabel={descreverTrama(periodo, lista.length)} onTocarDia={setDiaAberto} />
         <LegendaPontos />
       </section>
+
+      <Button variante="secundario" largo onClick={() => setDiaAberto(primeiroDiaComPontos)}>Ver pontos por dia</Button>
 
       <Button largo onClick={() => setPoster(true)} disabled={lista.length === 0}>Compartilhar pôster</Button>
 
@@ -74,6 +81,16 @@ export function MesPage() {
         layout={layout}
         membros={membrosNaTrama}
         total={lista.length}
+      />
+      <DiaDialog
+        dia={diaAberto}
+        dias={dias}
+        pontos={pontosDoDia}
+        membros={membros.data}
+        fuso={c.fuso}
+        onMudarDia={setDiaAberto}
+        onEscolher={p => { setDiaAberto(null); setSelecionado(p); }}
+        onFechar={() => setDiaAberto(null)}
       />
       <PontoDetalhe
         ponto={selecionado}

@@ -137,7 +137,8 @@ export function SemanaPage() {
 
 function descreverTrama(p: Periodo, n: number): string {
   const unidade = p.tipo === 'semana' ? 'Trama da semana: uma faixa por dia' : 'Trama do mês: uma faixa por dia';
-  return `${unidade}, uma linha por pessoa, das 6h às 22h. ${n} ${n === 1 ? 'ponto' : 'pontos'}. Toque num ponto para ver o detalhe.`;
+  const dica = p.tipo === 'semana' ? 'Toque num ponto para ver o detalhe.' : 'Toque num dia para ver os pontos.';
+  return `${unidade}, uma linha por pessoa, das 6h às 22h. ${n} ${n === 1 ? 'ponto' : 'pontos'}. ${dica}`;
 }
 
 export { descreverTrama };
