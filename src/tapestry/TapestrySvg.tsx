@@ -20,14 +20,23 @@ export function formatarHora(hora: number): string {
 }
 
 /** Rótulo acessível do ponto: tipo, quem, quando. Nunca inclui o texto do registro. */
+/** "Crise", "Sono, noite ruim"… */
+export function descreverTipo(p: Pick<Ponto, 'tipo' | 'sonoRuim'>): string {
+  return p.tipo === 'sono' ? `Sono, ${p.sonoRuim ? 'noite ruim' : 'dormiu bem'}` : ROTULO_TIPO[p.tipo];
+}
+
 export function rotuloDoPonto(pp: PontoPosicionado, rotulo: string, dia: string, variante: Variante): string {
-  const { tipo, sonoRuim } = pp.ponto;
-  const tipoTexto = tipo === 'sono' ? `Sono, ${sonoRuim ? 'noite ruim' : 'dormiu bem'}` : ROTULO_TIPO[tipo];
+  const tipoTexto = descreverTipo(pp.ponto);
   const [a, mes, d] = dia.split('-').map(Number);
   const quando = variante === 'semana'
     ? DIAS_SEMANA_EXTENSO[new Date(a, mes - 1, d, 12).getDay()]
     : `dia ${d}`;
   return `${tipoTexto}, ${rotulo}, ${quando} às ${formatarHora(pp.hora)}`;
+}
+
+function alturaFaixa(layout: LayoutTrama): number {
+  const [a, b] = layout.faixas;
+  return a && b ? b.y - a.y : layout.altura;
 }
 
 function curva(x1: number, y1: number, x2: number, y2: number): string {
@@ -43,9 +52,12 @@ export function TapestrySvg(props: {
   destaque?: Padrao | null;
   animar?: boolean;
   onSelecionar?: (p: Ponto) => void;
+  /** Quando presente, cada faixa vira a área de toque do dia e os pontos deixam de ser botões. */
+  onTocarDia?: (dia: string) => void;
   ariaLabel: string;
 }) {
-  const { layout, variante, destaque, animar, onSelecionar, ariaLabel } = props;
+  const { layout, variante, destaque, animar, onSelecionar, onTocarDia, ariaLabel } = props;
+  const pontosSaoBotoes = !onTocarDia;
   const semana = variante === 'semana';
   const altura = layout.altura + (semana ? ALTURA_EIXO : 0);
   const xInicio = layout.x(6);
@@ -122,20 +134,39 @@ export function TapestrySvg(props: {
         )}
       </g>
 
+      {onTocarDia && (
+        <g aria-hidden="true">
+          {layout.faixas.map(f => (
+            <rect
+              key={`toque-${f.dia}`}
+              data-dia={f.dia}
+              x={0} y={f.y} width={layout.largura} height={alturaFaixa(layout)}
+              fill="transparent"
+              style={{ cursor: 'pointer' }}
+              onClick={() => onTocarDia(f.dia)}
+            />
+          ))}
+        </g>
+      )}
+
       {layout.faixas.map((f, i) =>
         f.pontos.map(pp => (
           <g
             key={pp.ponto.id}
             data-ponto=""
-            role="button"
-            tabIndex={0}
-            aria-label={rotuloDoPonto(pp, rotulos.get(pp.ponto.membroId) ?? '', f.dia, variante)}
-            className={`${css.ponto} ${css.apagavel}`}
+            {...(pontosSaoBotoes
+              ? {
+                  role: 'button',
+                  tabIndex: 0,
+                  'aria-label': rotuloDoPonto(pp, rotulos.get(pp.ponto.membroId) ?? '', f.dia, variante),
+                  onClick: () => selecionar(pp.ponto),
+                  onKeyDown: (e: KeyboardEvent) => teclado(e, pp.ponto),
+                }
+              : { 'aria-hidden': true, pointerEvents: 'none' })}
+            className={`${pontosSaoBotoes ? css.ponto : ''} ${css.apagavel}`}
             opacity={destaque && !emDestaque.has(pp.ponto.id) ? OPACIDADE_APAGADA : 1}
             transform={`translate(${pp.x} ${pp.y})`}
             style={{ color: pp.cor }}
-            onClick={() => selecionar(pp.ponto)}
-            onKeyDown={e => teclado(e, pp.ponto)}
           >
             <circle className={css.alvo} r={semana ? 9 : 6} fill="transparent" />
             <g

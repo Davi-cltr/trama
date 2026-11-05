@@ -91,6 +91,11 @@ test('criar caderno, convidar, aceitar, dar ponto, ver na semana e gerar o pôst
   // 6. Ana abre o mês, gera o pôster e recebe um PNG.
   await paginaAna.getByRole('link', { name: 'Mês' }).click();
   await expect(paginaAna.getByRole('heading', { name: 'O mês do Theo' })).toBeVisible();
+  await paginaAna.getByRole('button', { name: 'Ver pontos por dia' }).click();
+  await expect(paginaAna.getByRole('dialog').getByRole('button', { name: /^Funcionou · Júlia, professora · / })).toBeVisible();
+  await capturar(paginaAna, 'mes-dia');
+  await semViolacoes(paginaAna);
+  await paginaAna.keyboard.press('Escape');
   await paginaAna.getByRole('button', { name: 'Compartilhar pôster' }).click();
   const [download] = await Promise.all([
     paginaAna.waitForEvent('download'),
